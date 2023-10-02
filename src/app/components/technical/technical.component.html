@@ -1,0 +1,333 @@
+
+<div class="m-1">  
+    <div class="card">
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between mt-2">
+        <h1 style="font-size: 22px; line-height:44px; font-weight: inherit; font-weight: bold;">{{title}}</h1>
+        <button (click)="clickAddRequision()" type="button" class="btn bi bi-plus-lg"
+       style="font-size: .8rem; border-radius: 100px; height: 2.2rem; width: 12rem; background-color:#B0C4DE; font-weight: bold;"
+        data-bs-toggle="modal" data-bs-target="#requisionDetail">
+        {{addButton}}
+      </button>
+      </div>
+
+<hr style="opacity: .1;">
+
+      <div class="row mb-5">
+        <div class="col-md-3">
+            <label><strong>Vessel</strong></label>
+            <ng-select>
+                <ng-option *ngFor="let values of dropdownVesselValues" [value]="values.name">{{values.name}}
+                </ng-option>
+            </ng-select>
+        </div>
+        <div class="col-md-3">
+            <label><strong>Project</strong></label>
+            <ng-select>
+            <ng-option *ngFor="let values of dropdownProjectValues" [value]="values.name">{{values.name}}
+            </ng-option>
+        </ng-select>
+        </div>
+        <div class="col-md-3">
+            <label><strong>Requisition</strong></label>
+            <ng-select [(ngModel)]="isProjectClick">
+                <ng-option *ngFor="let values of dropdownRequisitionValues" [value]="values.name">{{values.name}}
+                </ng-option>
+            </ng-select>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+<div class="visibilty" *ngIf="isProjectClick">
+
+    <div class="row">
+        <div class="col-md-6">
+        <div class="card mx-2" style="background-color:aliceblue;">
+
+            <div class="mx-3 mt-3">
+                <h3 style="font-weight: bolder;" class="mb-4">Project Details</h3>
+                <div class="form-group">
+                <div class="row">
+
+                    <div class="col-6 col-md-4 col-xxl-4 mb-3">
+                        <label for="id">Project Number : {{projectDetail.project_number}} </label>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-xxl-4 mb-3">
+                        <label for="id">Customer Name :  {{projectDetail.customer_name}} </label>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-xxl-4 mb-3">
+                        <label for="id">Department :  {{projectDetail.department}} </label>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-xxl-4 mb-3">
+                        <label for="id">City : {{projectDetail.city}}  </label>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-xxl-4 mb-3">
+                        <label for="id">Payment Type :  {{projectDetail.payment_type}} </label>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-xxl-4 mb-3">
+                        <label for="id">Payment Term :  {{projectDetail.payment_term}} </label>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-xxl-4 mb-3">
+                        <label for="id">Currency :  {{projectDetail.currency}} </label>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-xxl-4 mb-3">
+                        <label for="id">Estimated Time of Arrival :  {{projectDetail.eta}} </label>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-xxl-4 mb-3">
+                        <label for="id">Created By :  {{projectDetail.created_by}} </label>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3"></div>
+      </div>
+
+<hr style="opacity: .1;">
+
+</div>
+
+
+
+    <mat-horizontal-stepper>
+        
+        <mat-step>
+          <ng-template matStepLabel>
+            <span class="custom-step-label step1">Preparation</span>
+          </ng-template>
+          Preparation
+        </mat-step>
+      
+        <mat-step>
+          <ng-template matStepLabel>
+            <span class="custom-step-label step2">Pricing</span>
+          </ng-template>
+          Pricing
+        </mat-step>
+      
+        <mat-step>
+          <ng-template matStepLabel>
+            <span class="custom-step-label step3">Quotation</span>
+          </ng-template>
+          Quotation
+        </mat-step>
+      
+        <mat-step>
+          <ng-template matStepLabel>
+            <span class="custom-step-label step4">Order</span>
+          </ng-template>
+          Order
+        </mat-step>
+      
+        <mat-step>
+          <ng-template matStepLabel>
+            <span class="custom-step-label step5">Finance</span>
+          </ng-template>
+          Finance
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>
+              <span class="custom-step-label step5">Completed</span>
+            </ng-template>
+            Completed
+          </mat-step>
+
+      </mat-horizontal-stepper>
+
+  
+      
+  <table class="table table-bordered table-hover table-striped " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+            <tr>
+              <th scope="col">Number</th>
+              <th scope="col">Item Code</th>
+              <th scope="col">Description</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
+              <th scope="col">Total</th>
+              <th scope="col">Remark</th>
+              <th scope="col">Cost</th>
+              <th scope="col">Selected Supplier</th>
+              <th scope="col">Supplier Remark</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of fakeData; let i = index">
+              <td>{{data.id}}</td>
+              <td>{{data.item_code}}</td>
+              <td>{{data.description}}</td>
+              <td>{{data.unit}}</td>
+              <td>{{data.quantity}}</td>
+              <td>{{data.price}}</td>
+              <td>{{data.total}}</td>
+              <td>{{data.remark}}</td>
+              <td>{{data.cost}}</td>
+              <td>{{data.selected_supplier}}</td>
+              <td>{{data.supplier_remark}}</td>
+              <td>
+                <button  class="btn  mx-1 bi bi-paperclip" style="color:rgb(82, 82, 82); font-size: 1.2rem;" (click)="openPopup()"></button>
+                <button  class="btn  mx-1 bi bi-trash-fill " style="color:red; font-size: 1rem;" mwlConfirmationPopover
+                [popoverTitle]="'Delete Confirmation'"
+                [popoverMessage]="'Do you want to really delete?'"
+                [cancelText]="'Cancel'"
+                [confirmText]="'Confirm'"
+                [confirmButtonType]="'dark'"
+                [cancelButtonType]="'danger'"
+                (confirm)="onConfirm()"
+                (cancel)="onCancel()"></button>
+                <button  class="btn  mx-1 bi bi-pencil-square" style="color:#4169e1; font-size: 1rem;" (click)="updateData(data)" data-bs-toggle="modal" data-bs-target="#requisionDetail"></button>
+            </td>
+            </tr>
+          </tbody>
+  </table>
+
+</div>
+</div>
+</div>
+
+
+
+<div class="modal fade" id="requisionDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-bs-backdrop="static"  data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered  modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel" *ngIf="!isNew">Requisition Detail</h3>
+        <h3 class="modal-title" id="exampleModalLabel" *ngIf="isNew">Add New Requisition</h3>
+        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formValue">
+
+            <div class="form-group mt-2" *ngIf="!isNew">
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <label for="id"><strong>Number</strong></label>
+                  <input type="text" formControlName="id" class="form-control" id="id" aria-describedby="emailHelp" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <label for="item_code"><strong>Item Code</strong></label>
+                  <input type="text" formControlName="item_code" class="form-control" id="item_code" aria-describedby="emailHelp">
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="description"><strong>Description:</strong></label>
+                  <input type="text" formControlName="description" class="form-control" id="description" aria-describedby="emailHelp">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <label for="unit"><strong>Unit</strong></label>
+                  <input type="text" formControlName="unit" class="form-control" id="unit" aria-describedby="emailHelp">
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="quantity"><strong>Quantity</strong></label>
+                  <input type="text" formControlName="quantity" class="form-control" id="quantity" aria-describedby="emailHelp">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <label for="price"><strong>Price</strong></label>
+                  <input type="text" formControlName="price" class="form-control" id="price" aria-describedby="emailHelp">
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="total"><strong>Total</strong></label>
+                  <input type="text" formControlName="total" class="form-control" id="total" aria-describedby="emailHelp">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <label for="remark"><strong>Remark</strong></label>
+                  <input type="text" formControlName="remark" class="form-control" id="remark" aria-describedby="emailHelp">
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="cost"><strong>Cost</strong></label>
+                  <input type="text" formControlName="cost" class="form-control" id="cost" aria-describedby="emailHelp">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <label for="selected_supplier"><strong>Selected Supplier</strong></label>
+                  <input type="text" formControlName="selected_supplier" class="form-control" id="selected_supplier" aria-describedby="emailHelp">
+                </div>
+                <div class="col-md-6 mb-2">
+                  <label for="supplier_remark"><strong>Supplier Remark</strong></label>
+                  <input type="text" formControlName="supplier_remark" class="form-control" id="supplier_remark" aria-describedby="emailHelp">
+                </div>
+              </div>
+            </div> 
+              
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel" class="btn  btn-danger  me-auto" data-bs-dismiss="modal">Close</button>
+        <button type="button" (click)="saveChangeDatas(1)" class="btn btn-success"  *ngIf="isNew">Save</button>
+        <button type="button" (click)="saveChangeDatas(2)" class="btn btn-outline-success"  *ngIf="!isNew">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="option" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}" style="position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+margin:auto;
+background-color:rgba(0,0,0,0.3);
+z-index:99999;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Upload File</h5>
+          <button type="button" class="btn " (click)="closeOptionPopup()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+            <input type="file" class="custom-file-input" id="file"
+            aria-describedby="inputGroupFileAddon01" (change)="onSelectFile($event)">
+            <button  type="button" class="btn  mx-2 btn-sm" (click)="removeSelectedFile()" style="background-color:brown;color: aliceblue">Remove</button>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="close" class="btn  btn-danger  me-auto" (click)="closeOptionPopup()">İptal</button>
+            <button type="button" (click)="uploadFile()" class="btn btn-success">Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
